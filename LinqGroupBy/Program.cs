@@ -10,12 +10,34 @@ namespace LinqGroupBy
     {
         static void Main(string[] args)
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("Hello World!");
-            Console.ReadKey();
+            var persons = PersonRepository.GetPersons();
 
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
+            var query = from p in persons
+                where p.Age > 10
+                orderby p.LastName descending
+                group p by p.LastName;
+                //select p;
+
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.Key);
+                foreach (var i in item)
+                {
+                    Console.WriteLine($"\tFirst:{i.FirstName},Last:{i.LastName},Age:{i.Age}");
+                }
+            }
+            //Printing(query);
+
+
+           Console.ReadKey();
+        }
+
+        public static void Printing(dynamic type)
+        {
+            foreach (var t in type)
+            {
+                Console.WriteLine(t);
+            }
         }
     }
 }
